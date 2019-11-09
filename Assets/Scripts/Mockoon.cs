@@ -15,16 +15,19 @@ public class Mockoon : MonoBehaviour
     //[Range(0f, 10f)]
     public float lowJumpMultiplier = 2.0f;
 
+    public float groundedCheckDistance = 0.1f;
+    public LayerMask groundLayer;
+
+    public Transform spawner;
+
+    [Header("Audio")]
+    public RandomAudioPlayer jumpAudio;
+    public RandomAudioPlayer doubleJumpAudio;
+    public RandomAudioPlayer footstepsAudio;
+
     public bool IsGrounded { get; private set; }
     public bool IsRunning { get; private set; }
     public bool RequestingJump { get; private set; }
-
-    public float groundedCheckDistance = 0.1f;
-    public LayerMask groundLayer;
-    public BoxCollider2D collider;
-    public Vector2 playerSize;
-
-    public Transform spawner;
 
     Animator anim;
     Rigidbody2D body;
@@ -33,15 +36,13 @@ public class Mockoon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        playerSize = collider.size;
-
-        IsGrounded = true;
     }
 
     void Update()
     {
         HandleInput();
         CheckIfGrounded();
+        print(RequestingJump);
     }
 
     private void FixedUpdate()
@@ -50,23 +51,40 @@ public class Mockoon : MonoBehaviour
         SetAnimator();
 
         if (RequestingJump && IsGrounded)
+        {
             Jump();
-
-        if (body.velocity.x > 0f && IsGrounded)
-            IsRunning = true;
-
-        if (body.velocity.y < 0f)
-            body.gravityScale = fallMultiplier;
-        else if (body.velocity.y > 0f)
-            body.gravityScale = lowJumpMultiplier;
+        }
         else
+        {
+            RequestingJump = false;
+        }
+
+        if (Mathf.Abs(body.velocity.x) > 0f && IsGrounded)
+        {
+            IsRunning = true;
+        }
+
+        // Adjust the gravity scale so jump feels less floaty
+        if (body.velocity.y < 0f)
+        {
+            body.gravityScale = fallMultiplier;
+        }
+        else if (body.velocity.y > 0f)
+        {
+            body.gravityScale = lowJumpMultiplier;
+        }
+        else
+        {
             body.gravityScale = 1f;
+        }
     }
 
     void HandleInput()
     {
         if (Input.anyKeyDown)
+        {
             RequestingJump = true;
+        }
     }
 
     void MoveForward()
@@ -77,26 +95,34 @@ public class Mockoon : MonoBehaviour
     void Jump()
     {
         if (IsGrounded)
+        {
             IsGrounded = false;
-            body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
             RequestingJump = false;
+            body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
+            jumpAudio.PlayRandomSound();
+        }
     }
 
     void CheckIfGrounded()
     {
-        Vector2 rayStart = (Vector2)transform.position;
-        IsGrounded = Physics2D.Raycast(rayStart, Vector2.down, groundedCheckDistance, groundLayer);
+        Vector2 rayStart = transform.position;
+        IsGrounded = Physics2D.Raycast(rayStart, Vector2.down,
+            groundedCheckDistance, groundLayer) ? true : false;
 
-        Debug.DrawRay(rayStart, Vector2.down * groundedCheckDistance, new Color(1,0,0));
+        // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
+        Debug.DrawRay(rayStart, Vector2.down * groundedCheckDistance,
+            new Color(1, 0, 0));
     }
 
     void SetAnimator()
-
     {
         anim.SetBool("IsGrounded", IsGrounded);
         anim.SetBool("IsRunning", IsRunning);
     }
 
+    /// <summary>
+    /// Respawner
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "Goal")
