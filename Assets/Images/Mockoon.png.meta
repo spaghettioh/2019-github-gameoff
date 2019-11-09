@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: -2509846008558627704
     second: Mockoon_1
+  - first:
+      213: -3637143055523621967
+    second: Mockoon_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -95,18 +98,18 @@ TextureImporter:
       name: Mockoon_0
       rect:
         serializedVersion: 2
-        x: 25
+        x: 0
         y: 0
-        width: 71
-        height: 49
+        width: 100
+        height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7290ac1ad2c72fd478dc0f456096bea8
+      spriteID: 779d483bde3fc474eba7b1a907d5ee95
       internalID: 1092461538767129634
       vertices: []
       indices: 
@@ -116,19 +119,40 @@ TextureImporter:
       name: Mockoon_1
       rect:
         serializedVersion: 2
-        x: 121
+        x: 100
         y: 0
-        width: 71
-        height: 49
+        width: 100
+        height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4981ae071cdf182438d93c62573583a7
+      spriteID: 19579da9099d44056b286c32aee15436
       internalID: -2509846008558627704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mockoon_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cda1853b7c9942ccaa0d546a35f6a5e
+      internalID: -3637143055523621967
       vertices: []
       indices: 
       edges: []
