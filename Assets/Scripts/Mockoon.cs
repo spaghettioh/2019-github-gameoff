@@ -15,20 +15,25 @@ public class Mockoon : MonoBehaviour
     //[Range(0f, 10f)]
     public float lowJumpMultiplier = 2.0f;
 
-    public float groundedCheckDistance = 0.1f;
+    public Transform feet;
+    public float surfaceCheckDistance = 0.1f;
     public LayerMask groundLayer;
+    public Transform frontGrip;
 
     public Transform spawner;
 
     [Header("Audio")]
     public RandomAudioPlayer jumpAudio;
+    public RandomAudioPlayer wallJumpAudio;
     public RandomAudioPlayer doubleJumpAudio;
     public RandomAudioPlayer footstepsAudio;
 
     public bool IsGrounded { get; private set; }
+    public bool IsAgainstWall { get; private set; }
     public bool IsRunning { get; private set; }
     public bool RequestingJump { get; private set; }
 
+    int direction = 1;
     Animator anim;
     Rigidbody2D body;
 
@@ -42,7 +47,7 @@ public class Mockoon : MonoBehaviour
     {
         HandleInput();
         CheckIfGrounded();
-        print(RequestingJump);
+        CheckIfAgainstWall();
     }
 
     private void FixedUpdate()
@@ -50,18 +55,13 @@ public class Mockoon : MonoBehaviour
         MoveForward();
         SetAnimator();
 
-        if (RequestingJump && IsGrounded)
+        if (RequestingJump)
         {
             Jump();
         }
         else
         {
             RequestingJump = false;
-        }
-
-        if (Mathf.Abs(body.velocity.x) > 0f && IsGrounded)
-        {
-            IsRunning = true;
         }
 
         // Adjust the gravity scale so jump feels less floaty
@@ -77,6 +77,10 @@ public class Mockoon : MonoBehaviour
         {
             body.gravityScale = 1f;
         }
+
+        // Update sprite direction with movement
+        Vector3 scale = new Vector3(1 * direction, 1, 1);
+        transform.localScale = scale;
     }
 
     void HandleInput()
@@ -89,7 +93,12 @@ public class Mockoon : MonoBehaviour
 
     void MoveForward()
     {
-        body.velocity = new Vector2(1f * moveSpeed, body.velocity.y);
+        body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
+
+        if (Mathf.Abs(body.velocity.x) > 0f && IsGrounded)
+        {
+            IsRunning = true;
+        }
     }
 
     void Jump()
@@ -101,23 +110,43 @@ public class Mockoon : MonoBehaviour
             body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
             jumpAudio.PlayRandomSound();
         }
+        else if (IsAgainstWall)
+        {
+            IsAgainstWall = false;
+            RequestingJump = false;
+            direction *= -1;
+            body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
+            wallJumpAudio.PlayRandomSound();
+        }
     }
 
     void CheckIfGrounded()
     {
-        Vector2 rayStart = transform.position;
+        Vector2 rayStart = feet.position;
         IsGrounded = Physics2D.Raycast(rayStart, Vector2.down,
-            groundedCheckDistance, groundLayer) ? true : false;
+            surfaceCheckDistance, groundLayer) || false;
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
-        Debug.DrawRay(rayStart, Vector2.down * groundedCheckDistance,
+        Debug.DrawRay(rayStart, Vector2.down * surfaceCheckDistance,
             new Color(1, 0, 0));
+    }
+
+    void CheckIfAgainstWall()
+    {
+        Vector2 rayStart = frontGrip.position;
+        IsAgainstWall = Physics2D.Raycast(rayStart, Vector2.right,
+            surfaceCheckDistance, groundLayer) || false;
+
+        // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
+        Debug.DrawRay(rayStart, Vector2.right * surfaceCheckDistance,
+            new Color(0, 1, 0));
     }
 
     void SetAnimator()
     {
         anim.SetBool("IsGrounded", IsGrounded);
         anim.SetBool("IsRunning", IsRunning);
+        //TODO: anim.SetBool("IsAgainstWall", IsAgainstWall);
     }
 
     /// <summary>
