@@ -20,6 +20,8 @@ public class Mockoon : MonoBehaviour
     public float surfaceCheckDistance = 0.1f;
     public LayerMask groundLayer;
     public Transform frontGrip;
+    public BooleanVariable grounded;
+    public BooleanVariable againstWall;
 
     [Header("Debug")]
     public Transform spawner;
