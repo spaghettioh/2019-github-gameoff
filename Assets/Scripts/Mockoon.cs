@@ -105,9 +105,9 @@ public class Mockoon : MonoBehaviour
 
     void Jump()
     {
-        if (IsGrounded)
+        if (grounded.value)
         {
-            IsGrounded = false;
+            grounded.value = false;
             RequestingJump = false;
             body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
@@ -131,7 +131,7 @@ public class Mockoon : MonoBehaviour
     void CheckIfGrounded()
     {
         Vector2 rayStart = feet.position;
-        IsGrounded = Physics2D.Raycast(rayStart, Vector2.down,
+        grounded.value = Physics2D.Raycast(rayStart, Vector2.down,
             surfaceCheckDistance, groundLayer) || false;
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
@@ -152,7 +152,7 @@ public class Mockoon : MonoBehaviour
 
     void SetAnimator()
     {
-        anim.SetBool("IsGrounded", IsGrounded);
+        anim.SetBool("IsGrounded", grounded);
         anim.SetBool("IsRunning", IsRunning);
         anim.SetBool("IsAgainstWall", IsAgainstWall);
     }
