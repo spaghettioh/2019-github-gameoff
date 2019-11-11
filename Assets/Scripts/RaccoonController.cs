@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mockoon : MonoBehaviour
+public class RaccoonController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 3.0f;
@@ -20,8 +20,8 @@ public class Mockoon : MonoBehaviour
     public float surfaceCheckDistance = 0.1f;
     public LayerMask groundLayer;
     public Transform frontGrip;
-    public BooleanVariable grounded;
-    public BooleanVariable againstWall;
+    public BooleanVariable IsGrounded;
+    public BooleanVariable IsAgainstWall;
 
     [Header("Debug")]
     public Transform spawner;
@@ -32,8 +32,8 @@ public class Mockoon : MonoBehaviour
     public RandomAudioPlayer doubleJumpAudio;
     public RandomAudioPlayer footstepsAudio;
 
-    public bool IsGrounded { get; private set; }
-    public bool IsAgainstWall { get; private set; }
+    //public bool IsGrounded { get; private set; }
+    //public bool IsAgainstWall { get; private set; }
     public bool IsRunning { get; private set; }
     public bool RequestingJump { get; private set; }
 
@@ -56,9 +56,6 @@ public class Mockoon : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print("wall: " + IsAgainstWall);
-        print("ground: " + IsGrounded);
-
         MoveForward();
         SetAnimator();
 
@@ -105,9 +102,9 @@ public class Mockoon : MonoBehaviour
 
     void Jump()
     {
-        if (grounded.value)
+        if (IsGrounded.value)
         {
-            grounded.value = false;
+            IsGrounded.value = false;
             RequestingJump = false;
             body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
@@ -117,7 +114,7 @@ public class Mockoon : MonoBehaviour
         {
             body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
-            IsAgainstWall = false;
+            IsAgainstWall.SetValue(false);
             RequestingJump = false;
             direction *= -1;
             wallJumpAudio.PlayRandomSound();
@@ -131,8 +128,8 @@ public class Mockoon : MonoBehaviour
     void CheckIfGrounded()
     {
         Vector2 rayStart = feet.position;
-        grounded.value = Physics2D.Raycast(rayStart, Vector2.down,
-            surfaceCheckDistance, groundLayer) || false;
+        IsGrounded.SetValue(Physics2D.Raycast(rayStart, Vector2.down,
+            surfaceCheckDistance, groundLayer) || false);
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
         Debug.DrawRay(rayStart, Vector2.down * surfaceCheckDistance,
@@ -142,8 +139,8 @@ public class Mockoon : MonoBehaviour
     void CheckIfAgainstWall()
     {
         Vector2 rayStart = frontGrip.position;
-        IsAgainstWall = Physics2D.Raycast(rayStart, Vector2.right * direction,
-            surfaceCheckDistance, groundLayer) || false;
+        IsAgainstWall.SetValue(Physics2D.Raycast(rayStart, Vector2.right * direction,
+            surfaceCheckDistance, groundLayer) || false);
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
         Debug.DrawRay(rayStart, Vector2.right * surfaceCheckDistance,
@@ -152,9 +149,9 @@ public class Mockoon : MonoBehaviour
 
     void SetAnimator()
     {
-        anim.SetBool("IsGrounded", grounded);
+        anim.SetBool("IsGrounded", IsGrounded.value);
         anim.SetBool("IsRunning", IsRunning);
-        anim.SetBool("IsAgainstWall", IsAgainstWall);
+        anim.SetBool("IsAgainstWall", IsAgainstWall.value);
     }
 
     /// <summary>
