@@ -16,7 +16,8 @@ public class RaccoonController : MonoBehaviour
     public float lowJumpMultiplier = 2.0f;
 
     [Space]
-    public Transform feet;
+    public Transform backFeet;
+    public Transform frontFeet;
     public float surfaceCheckDistance = 0.1f;
     public LayerMask groundLayer;
     public Transform frontGrip;
@@ -59,9 +60,16 @@ public class RaccoonController : MonoBehaviour
         MoveForward();
         SetAnimator();
 
+        // Update sprite direction with movement
+        transform.localScale = new Vector3(1 * direction, 1, 1);
+
         if (RequestingJump)
         {
             Jump();
+        }
+        else
+        {
+            RequestingJump = false;
         }
 
         //if (!IsGrounded)
@@ -82,9 +90,6 @@ public class RaccoonController : MonoBehaviour
         {
             body.gravityScale = 1;
         }
-
-        // Update sprite direction with movement
-        transform.localScale = new Vector3(1 * direction, 1, 1);
     }
 
     void HandleInput()
@@ -104,13 +109,13 @@ public class RaccoonController : MonoBehaviour
     {
         if (IsGrounded.value)
         {
-            IsGrounded.value = false;
+            IsGrounded.SetValue(false);
             RequestingJump = false;
             body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
             jumpAudio.PlayRandomSound();
         }
-        else if (IsAgainstWall)
+        else if (IsAgainstWall.value)
         {
             body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
@@ -127,12 +132,18 @@ public class RaccoonController : MonoBehaviour
 
     void CheckIfGrounded()
     {
-        Vector2 rayStart = feet.position;
-        IsGrounded.SetValue(Physics2D.Raycast(rayStart, Vector2.down,
-            surfaceCheckDistance, groundLayer) || false);
+        Vector2 backFeetStart = backFeet.position;
+        Vector2 frontFeetStart = frontFeet.position;
+        bool groundedResult = (Physics2D.Raycast(backFeetStart, Vector2.down,
+            surfaceCheckDistance, groundLayer) ||
+            Physics2D.Raycast(frontFeetStart, Vector2.down,
+            surfaceCheckDistance, groundLayer));
+        IsGrounded.SetValue(groundedResult || false);
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
-        Debug.DrawRay(rayStart, Vector2.down * surfaceCheckDistance,
+        Debug.DrawRay(backFeetStart, Vector2.down * surfaceCheckDistance,
+            new Color(1, 0, 0));
+        Debug.DrawRay(frontFeetStart, Vector2.down * surfaceCheckDistance,
             new Color(1, 0, 0));
     }
 
