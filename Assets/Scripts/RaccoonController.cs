@@ -89,7 +89,7 @@ public class RaccoonController : MonoBehaviour
 
     void HandleInput()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetButtonDown("Jump"))
         {
             RequestingJump = true;
         }
