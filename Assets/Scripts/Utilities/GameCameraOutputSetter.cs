@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CameraSetter : MonoBehaviour
+public class GameCameraOutputSetter : MonoBehaviour
 {
     public RenderTexture gameCameraOutput;
 
