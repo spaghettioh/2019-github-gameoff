@@ -23,6 +23,7 @@ public class RaccoonController : MonoBehaviour
     public Transform frontGrip;
     public BooleanVariable IsGrounded;
     public BooleanVariable IsAgainstWall;
+    public TransformVariable raccoonTransform;
 
     [Header("Debug")]
     public Transform spawner;
@@ -53,6 +54,8 @@ public class RaccoonController : MonoBehaviour
         HandleInput();
         CheckIfGrounded();
         CheckIfAgainstWall();
+
+        raccoonTransform.value = transform;
     }
 
     private void FixedUpdate()
