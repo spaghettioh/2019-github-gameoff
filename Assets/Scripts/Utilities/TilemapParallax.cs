@@ -5,14 +5,14 @@
 /// </summary>
 public class TilemapParallax : MonoBehaviour
 {
-    public Transform relative;
+    public TransformVariable parallaxTo;
     public enum ParallaxLayer { Closest, Closer, Close, None, Far, Farther, Farthest, Static};
     public ParallaxLayer parallax = ParallaxLayer.None;
     Vector3 startPosition;
 
     private void Awake()
     {
-        startPosition = relative.position;
+        startPosition = parallaxTo.value.position;
     }
 
     void FixedUpdate()
@@ -54,6 +54,6 @@ public class TilemapParallax : MonoBehaviour
                 break;
         }
 
-        transform.position = (startPosition - relative.position) * multiplier;
+        transform.position = (startPosition - parallaxTo.value.position) * multiplier;
     }
 }
