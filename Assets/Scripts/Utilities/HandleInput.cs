@@ -1,24 +1,76 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-namespace Parcoun.Utilities
+public class HandleInput : MonoBehaviour
 {
-    public class HandleInput : MonoBehaviour
-    {
-        public UnityEvent anyKeyPressed;
+    public float keyPressIgnore;
+    public UnityEvent onKeyPressed;
 
-        void Update()
+    [Space]
+    public float keyShortHoldWait;
+    public UnityEvent onKeyShortHold;
+
+    [Space]
+    public float keyLongHoldWait;
+    public UnityEvent onKeyLongHold;
+
+    float keyDownTimer = 0;
+    protected List<KeyCode> activeInputs = new List<KeyCode>();
+
+    public void Update()
+    {
+        List<KeyCode> pressedInput = new List<KeyCode>();
+
+        if (Input.anyKeyDown || Input.anyKey)
         {
-            if (Input.anyKeyDown)
+            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
             {
-                anyKeyPressed.Invoke();
+                if (Input.GetKey(code))
+                {
+                    activeInputs.Remove(code);
+                    activeInputs.Add(code);
+                    pressedInput.Add(code);
+                }
+            }
+            keyDownTimer += Time.deltaTime;
+        }
+
+        List<KeyCode> releasedInput = new List<KeyCode>();
+
+        foreach (KeyCode code in activeInputs)
+        {
+            releasedInput.Add(code);
+
+            if (!pressedInput.Contains(code))
+            {
+                releasedInput.Remove(code);
             }
         }
 
-        public void LoadScene(string s)
+        // This condition means all keys were released just now
+        if (releasedInput.Count == 0 && activeInputs.Count != 0)
         {
-            SceneManager.LoadScene(s);
+            if (keyDownTimer > keyLongHoldWait)
+            {
+                onKeyLongHold.Invoke();
+            }
+            else if (keyDownTimer > keyShortHoldWait && keyDownTimer < keyLongHoldWait)
+            {
+                onKeyShortHold.Invoke();
+            }
+            else if (keyDownTimer > 0 && keyDownTimer < keyPressIgnore)
+            {
+                onKeyPressed.Invoke();
+            }
+            else
+            {
+                Debug.Log("Timer was " + keyDownTimer + " which is between short and long wait ("+keyShortHoldWait+" - "+keyLongHoldWait+".");
+            }
+
+            keyDownTimer = 0;
         }
+
+        activeInputs = releasedInput;
     }
 }
