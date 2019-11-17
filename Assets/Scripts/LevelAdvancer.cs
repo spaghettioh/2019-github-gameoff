@@ -12,19 +12,19 @@ public class LevelAdvancer : MonoBehaviour
     void Start()
     {
         levelIndex.currentLevel = 0;
-        SceneManager.LoadSceneAsync(levels[levelIndex.currentLevel], LoadSceneMode.Additive);
+//        SceneManager.LoadSceneAsync(levels[levelIndex.currentLevel], LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            NextLevel();
-        }
+        //if(Input.GetKeyDown(KeyCode.P))
+        //{
+        //    NextLevel();
+        //}
     }
 
-    void NextLevel()
+    public void NextLevel()
     {
         SceneManager.UnloadSceneAsync(levels[levelIndex.currentLevel]);
         levelIndex.currentLevel += 1;
