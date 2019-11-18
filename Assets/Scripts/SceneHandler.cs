@@ -9,15 +9,17 @@ public class SceneHandler : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "AlleyScene")
+        if (thisSceneName == "AlleyScene")
         {
             LoadASceneAsync("Title");
         }
     }
     public void LoadASceneAsync(string sceneName)
     {
-        print(SceneManager.GetAllScenes());
-        SceneManager.UnloadSceneAsync(thisSceneName); ;
+        if (thisSceneName != "AlleyScene")
+        {
+            SceneManager.UnloadSceneAsync(thisSceneName);
+        }
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 }

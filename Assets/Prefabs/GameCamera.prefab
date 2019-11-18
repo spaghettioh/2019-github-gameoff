@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 10
+    OrthographicSize: 4
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 9028243168936230709}
   - component: {fileID: 2753540499434800636}
   - component: {fileID: 8290140005508631131}
-  - component: {fileID: 3794418954054699576}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -212,7 +211,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -261,25 +260,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3794418954054699576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4562695876572250742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfa8d55dbe3c4e919c1bfecd9efa159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameCameraOutputTexture: {fileID: 8400000, guid: 2ddcbbfe205284a898baba90570912d2,
-    type: 2}
-  cinemachineTransformForParallax: {fileID: 11400000, guid: 2d472fd8467ad4b1ba592de703bb6b43,
-    type: 2}
-  raccoonTransformForFollow: {fileID: 11400000, guid: bcff665c47fde493ca170f388d1cce0f,
-    type: 2}
-  cinemachineToSetFollow: {fileID: 1001882583271257032}
 --- !u!1 &5464954915106424616
 GameObject:
   m_ObjectHideFlags: 0
