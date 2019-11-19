@@ -5889,9 +5889,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2274970942175450343}
-  - component: {fileID: 7937398964220230694}
   m_Layer: 0
-  m_Name: building_413.0565 (1)
+  m_Name: bldg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5915,26 +5914,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
---- !u!114 &7937398964220230694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4004673692127633145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc88aec74314fae41a47928f1aefd537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrio: {fileID: 0}
-  andar: {fileID: 0}
-  cobertura: {fileID: 0}
-  centro: {fileID: 0}
-  alturaAndar: 4
-  andarQuantMax: 10
-  andarQuantMin: 3
-  building: {fileID: 0}
 --- !u!1 &4158626233801522741
 GameObject:
   m_ObjectHideFlags: 0

@@ -5387,7 +5387,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 34081168829180114}
-  - component: {fileID: 7184227949127637669}
   m_Layer: 0
   m_Name: bldg2
   m_TagString: Untagged
@@ -5417,26 +5416,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
---- !u!114 &7184227949127637669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249185357084876279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc88aec74314fae41a47928f1aefd537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrio: {fileID: 0}
-  andar: {fileID: 0}
-  cobertura: {fileID: 0}
-  centro: {fileID: 0}
-  alturaAndar: 4
-  andarQuantMax: 10
-  andarQuantMin: 3
-  building: {fileID: 0}
 --- !u!1 &6299360469371560634
 GameObject:
   m_ObjectHideFlags: 0
