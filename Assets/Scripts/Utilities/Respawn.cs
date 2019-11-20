@@ -4,9 +4,10 @@ public class Respawn : MonoBehaviour
 {
     public Transform spawner;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D c)
     {
-        if (other.gameObject.name == "Raccoon")
-            gameObject.transform.position = spawner.position;
+        GameObject g = c.gameObject;
+        if (g.name == "Raccoon")
+            g.transform.position = spawner.position;
     }
 }
