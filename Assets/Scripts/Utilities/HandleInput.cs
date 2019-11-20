@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class HandleInput : MonoBehaviour
 {
-    public float keyPressIgnore;
+    public float keyPressIgnoreAfter;
     public UnityEvent onKeyPressed;
 
     [Space]
@@ -59,7 +59,7 @@ public class HandleInput : MonoBehaviour
             {
                 onKeyShortHold.Invoke();
             }
-            else if (keyDownTimer > 0 && keyDownTimer < keyPressIgnore)
+            else if (keyDownTimer > 0 && keyDownTimer < keyPressIgnoreAfter)
             {
                 onKeyPressed.Invoke();
             }

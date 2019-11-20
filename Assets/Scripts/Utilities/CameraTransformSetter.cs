@@ -15,6 +15,6 @@ public class CameraTransformSetter : MonoBehaviour
 
     void Update()
     {
-        thisCameraTransform.SetValue(transform);
+        //thisCameraTransform.SetValue(transform);
     }
 }

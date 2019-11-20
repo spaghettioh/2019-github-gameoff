@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfadcb648941419e8861d7925f200ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPressIgnore: 1
+  keyPressIgnoreAfter: 1
   onKeyPressed:
     m_PersistentCalls:
       m_Calls:

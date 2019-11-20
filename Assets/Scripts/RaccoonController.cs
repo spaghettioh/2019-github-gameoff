@@ -23,10 +23,6 @@ public class RaccoonController : MonoBehaviour
     public Transform frontGrip;
     public BooleanVariable IsGrounded;
     public BooleanVariable IsAgainstWall;
-    public TransformVariable raccoonTransform;
-
-    [Header("Debug")]
-    public Transform spawner;
 
     [Header("Audio")]
     public RandomAudioPlayer jumpAudio;
@@ -34,8 +30,6 @@ public class RaccoonController : MonoBehaviour
     public RandomAudioPlayer doubleJumpAudio;
     public RandomAudioPlayer footstepsAudio;
 
-    //public bool IsGrounded { get; private set; }
-    //public bool IsAgainstWall { get; private set; }
     public bool IsRunning { get; private set; }
     public bool RequestingJump { get; private set; }
 
@@ -51,11 +45,8 @@ public class RaccoonController : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
         CheckIfGrounded();
         CheckIfAgainstWall();
-
-        raccoonTransform.value = transform;
     }
 
     private void FixedUpdate()
@@ -95,20 +86,12 @@ public class RaccoonController : MonoBehaviour
         }
     }
 
-    void HandleInput()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            RequestingJump = true;
-        }
-    }
-
     void MoveForward()
     {
         body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
     }
 
-    void Jump()
+    public void Jump()
     {
         if (IsGrounded.value)
         {
@@ -166,14 +149,5 @@ public class RaccoonController : MonoBehaviour
         anim.SetBool("IsGrounded", IsGrounded.value);
         anim.SetBool("IsRunning", IsRunning);
         anim.SetBool("IsAgainstWall", IsAgainstWall.value);
-    }
-
-    /// <summary>
-    /// Respawner
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Goal")
-            gameObject.transform.position = spawner.position;
     }
 }

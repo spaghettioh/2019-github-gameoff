@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 9135094774403581673}
   - component: {fileID: 9135094774403581675}
   - component: {fileID: 9135094774403581653}
+  - component: {fileID: 8347555226211093167}
   m_Layer: 12
   m_Name: Raccoon
   m_TagString: Untagged
@@ -207,6 +208,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.06}
   m_Size: {x: 1, y: 0.6}
   m_Direction: 1
+--- !u!114 &8347555226211093167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135094774403581652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f4d58c3f9984a71be2c2b511418ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  get: {fileID: 9135094774403581679}
+  set: {fileID: 11400000, guid: bcff665c47fde493ca170f388d1cce0f, type: 2}
+  whenToSet: 2
 --- !u!1 &9135094775633916331
 GameObject:
   m_ObjectHideFlags: 0

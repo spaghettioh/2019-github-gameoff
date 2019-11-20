@@ -8,6 +8,7 @@ public class TilemapParallax : MonoBehaviour
     public TransformVariable parallaxTo;
     public enum ParallaxLayer { Closest, Closer, Close, None, Far, Farther, Farthest, Static};
     public ParallaxLayer parallax = ParallaxLayer.None;
+    float damping = 5;
     Vector3 startPosition;
 
     private void Awake()
@@ -15,7 +16,7 @@ public class TilemapParallax : MonoBehaviour
         startPosition = parallaxTo.value.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         float multiplier;
 
@@ -54,6 +55,7 @@ public class TilemapParallax : MonoBehaviour
                 break;
         }
 
-        transform.position = (startPosition - parallaxTo.value.position) * multiplier;
+        Vector3 newPosition = (startPosition - parallaxTo.value.position) * multiplier;
+        transform.position = Vector3.Lerp(transform.position, newPosition, damping * Time.deltaTime);
     }
 }
