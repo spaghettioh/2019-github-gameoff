@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelAdvancer : MonoBehaviour
 {
-    public LevelIndex levelIndex;
+    public IntegerVariable levelIndex;
     public string[] levels;
 
     // Start is called before the first frame update
     void Start()
     {
-        levelIndex.currentLevel = 0;
+        levelIndex.value = 0;
 //        SceneManager.LoadSceneAsync(levels[levelIndex.currentLevel], LoadSceneMode.Additive);
     }
 
@@ -26,8 +26,8 @@ public class LevelAdvancer : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.UnloadSceneAsync(levels[levelIndex.currentLevel]);
-        levelIndex.currentLevel += 1;
-        SceneManager.LoadSceneAsync(levels[levelIndex.currentLevel], LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(levels[levelIndex.value]);
+        levelIndex.value += 1;
+        SceneManager.LoadSceneAsync(levels[levelIndex.value], LoadSceneMode.Additive);
     }
 }
