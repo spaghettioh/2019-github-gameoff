@@ -2,24 +2,45 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Checks for any input whatsoever and triggers unity events based on configured hold timings.
+/// </summary>
 public class HandleInput : MonoBehaviour
 {
-    public float keyPressIgnoreAfter;
+    [Tooltip("If released after this time and before short hold wait, ignore the button press altogether.")]
+    public float ignorePressAfter;
     public UnityEvent onKeyPressed;
 
     [Space]
-    public float keyShortHoldWait;
+    public float shortHoldWait;
     public UnityEvent onKeyShortHold;
 
     [Space]
-    public float keyLongHoldWait;
+    public float longHoldWait;
     public UnityEvent onKeyLongHold;
 
-    float keyDownTimer = 0;
+    float keyDownTimer;
     protected List<KeyCode> activeInputs = new List<KeyCode>();
+
+    // Check the configuraiton.
+    private void Start()
+    {
+        if (shortHoldWait < ignorePressAfter)
+        {
+            Debug.LogError("Short Hold Wait (" + shortHoldWait +
+                ") can't be lower than Ignore Press After (" + ignorePressAfter + ")");
+        }
+
+        if (longHoldWait < shortHoldWait)
+        {
+            Debug.LogError("Long Hold Wait (" + longHoldWait +
+                ") can't be lower than Short Hold Wait (" + shortHoldWait + ")");
+        }
+    }
 
     public void Update()
     {
+        // Record which inputs are pressed
         List<KeyCode> pressedInput = new List<KeyCode>();
 
         if (Input.anyKeyDown || Input.anyKey)
@@ -36,6 +57,7 @@ public class HandleInput : MonoBehaviour
             keyDownTimer += Time.deltaTime;
         }
 
+        // Record which held inputs were just released
         List<KeyCode> releasedInput = new List<KeyCode>();
 
         foreach (KeyCode code in activeInputs)
@@ -51,21 +73,17 @@ public class HandleInput : MonoBehaviour
         // This condition means all keys were released just now
         if (releasedInput.Count == 0 && activeInputs.Count != 0)
         {
-            if (keyDownTimer > keyLongHoldWait)
+            if (keyDownTimer > longHoldWait)
             {
                 onKeyLongHold.Invoke();
             }
-            else if (keyDownTimer > keyShortHoldWait && keyDownTimer < keyLongHoldWait)
+            else if (keyDownTimer > shortHoldWait && keyDownTimer < longHoldWait)
             {
                 onKeyShortHold.Invoke();
             }
-            else if (keyDownTimer > 0 && keyDownTimer < keyPressIgnoreAfter)
+            else if (keyDownTimer > 0 && keyDownTimer < ignorePressAfter)
             {
                 onKeyPressed.Invoke();
-            }
-            else
-            {
-                Debug.Log("Timer was " + keyDownTimer + " which is between short and long wait ("+keyShortHoldWait+" - "+keyLongHoldWait+".");
             }
 
             keyDownTimer = 0;

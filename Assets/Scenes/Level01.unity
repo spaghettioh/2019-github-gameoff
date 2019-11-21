@@ -256,7 +256,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6552145388824593233, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: awake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552145388824593233, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: update
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552145388824593233, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: start
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5784925910854307832, guid: 15f381438cc1a4c93963b37ed31480a7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15f381438cc1a4c93963b37ed31480a7, type: 3}
 --- !u!1001 &1568637279
 PrefabInstance:
@@ -3174,6 +3205,16 @@ PrefabInstance:
     - target: {fileID: 6117172526459082941, guid: 949956341cc1e2d4d956206219d30234,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
+        type: 3}
+      propertyPath: onKeyShortHold.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
+        type: 3}
+      propertyPath: onKeyLongHold.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,

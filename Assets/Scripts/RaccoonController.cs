@@ -1,28 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RaccoonController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 3.0f;
-    //[Range(0f, 10f)]
-    public float jumpVelocity = 5.0f;
+    public float moveForce = 3.0f;
+    public float jumpForce = 5.0f;
     [Tooltip("Attempts to get rid of floaty jumping.")]
-    //[Range(0f, 10f)]
     public float fallMultiplier = 2.5f;
     [Tooltip("Allows player to release button mid-jump for a short hop.")]
-    //[Range(0f, 10f)]
     public float lowJumpMultiplier = 2.0f;
 
-    [Space]
+    [Header("Physics stuff")]
     public Transform backFeet;
     public Transform frontFeet;
     public float surfaceCheckDistance = 0.1f;
     public LayerMask groundLayer;
     public Transform frontGrip;
     public BooleanVariable IsGrounded;
-    public BooleanVariable IsAgainstWall;
+    public BooleanVariable IsWallSliding;
+
+    public bool IsAgainstWall { get; private set; }
 
     [Header("Audio")]
     public RandomAudioPlayer jumpAudio;
@@ -37,7 +34,14 @@ public class RaccoonController : MonoBehaviour
     Animator anim;
     Rigidbody2D body;
 
-    void Awake()
+    [Header("Debug")]
+    public bool grounded;
+    public bool againstWall;
+    public bool sliding;
+    public float xVelocity;
+    public float yVelocity;
+
+    void Start()
     {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
@@ -47,15 +51,19 @@ public class RaccoonController : MonoBehaviour
     {
         CheckIfGrounded();
         CheckIfAgainstWall();
+
+        grounded = IsGrounded.value;
+        againstWall = IsAgainstWall;
+        sliding = IsWallSliding.value;
+        xVelocity = (float)System.Math.Round(body.velocity.x, 2);
+        yVelocity = (float)System.Math.Round(body.velocity.y, 2);
     }
 
     private void FixedUpdate()
     {
-        MoveForward();
+        DoPhysics();
         SetAnimator();
-
-        // Update sprite direction with movement
-        transform.localScale = new Vector3(1 * direction, 1, 1);
+        SetSpriteStuff();
 
         if (RequestingJump)
         {
@@ -66,17 +74,31 @@ public class RaccoonController : MonoBehaviour
             RequestingJump = false;
         }
 
-        //if (!IsGrounded)
+        // Useful for troubleshooting
+        //if (!IsGrounded.value)
         //    Time.timeScale = 0.15f;
         //else
         //    Time.timeScale = 1.0f;
+    }
+
+    void DoPhysics()
+    {
+        // Always move right unless in the air
+        if (IsGrounded.value)
+        {
+            body.AddForce(Vector2.right * moveForce, ForceMode2D.Force);
+        }
+        else
+        {
+            body.AddForce(Vector2.right * direction * moveForce, ForceMode2D.Force);
+        }
 
         // Adjust the gravity scale so jump feels less floaty
-        if (body.velocity.y < 0)
+        if (body.velocity.y < -0.01f)
         {
             body.gravityScale = fallMultiplier;
         }
-        else if (body.velocity.y > 0)
+        else if (body.velocity.y > 0.1f && !IsWallSliding.value)
         {
             body.gravityScale = lowJumpMultiplier;
         }
@@ -84,11 +106,36 @@ public class RaccoonController : MonoBehaviour
         {
             body.gravityScale = 1;
         }
-    }
 
-    void MoveForward()
-    {
-        body.velocity = new Vector2(direction * moveSpeed, body.velocity.y);
+        // Get ready for wall jump
+        if (!IsGrounded.value && IsAgainstWall && body.velocity.y < -0.01f)
+        {
+            IsWallSliding.value = true;
+        }
+        else
+        {
+            IsWallSliding.value = false;
+        }
+
+        // Update sprite direction with movement
+        if (body.velocity.x < -0.01f)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        }
+
+        // I hate this garbage
+        if ((float)Mathf.Abs(body.velocity.x) > 0.01f)
+        {
+            IsRunning = true;
+        }
+        else
+        {
+            IsRunning = false;
+        }
     }
 
     public void Jump()
@@ -96,24 +143,29 @@ public class RaccoonController : MonoBehaviour
         if (IsGrounded.value)
         {
             IsGrounded.SetValue(false);
+            body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             RequestingJump = false;
-            body.velocity += new Vector2(body.velocity.x, jumpVelocity);
-            //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
+            //body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             jumpAudio.PlayRandomSound();
         }
-        else if (IsAgainstWall.value)
+        else if (IsWallSliding.value)
         {
-            body.velocity += new Vector2(body.velocity.x, jumpVelocity);
-            //body.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse);
-            IsAgainstWall.SetValue(false);
-            RequestingJump = false;
+            //body.velocity += new Vector2(body.velocity.x, jumpVelocity);
             direction *= -1;
+            body.AddForce(new Vector2(moveForce * direction, jumpForce), ForceMode2D.Impulse);
+            RequestingJump = false;
             wallJumpAudio.PlayRandomSound();
         }
         else
         {
             RequestingJump = false;
         }
+    }
+
+    void SetSpriteStuff()
+    {
+        // Update sprite direction with movement
+        transform.localScale = new Vector3(1 * direction, 1, 1);
     }
 
     void CheckIfGrounded()
@@ -136,8 +188,8 @@ public class RaccoonController : MonoBehaviour
     void CheckIfAgainstWall()
     {
         Vector2 rayStart = frontGrip.position;
-        IsAgainstWall.SetValue(Physics2D.Raycast(rayStart, Vector2.right * direction,
-            surfaceCheckDistance, groundLayer) || false);
+        IsAgainstWall = Physics2D.Raycast(rayStart, Vector2.right * direction,
+            surfaceCheckDistance, groundLayer) || false;
 
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
         Debug.DrawRay(rayStart, Vector2.right * surfaceCheckDistance,
@@ -148,6 +200,6 @@ public class RaccoonController : MonoBehaviour
     {
         anim.SetBool("IsGrounded", IsGrounded.value);
         anim.SetBool("IsRunning", IsRunning);
-        anim.SetBool("IsAgainstWall", IsAgainstWall.value);
+        anim.SetBool("IsWallSliding", IsWallSliding.value);
     }
 }
