@@ -5,57 +5,59 @@
 /// </summary>
 public class TilemapParallax : MonoBehaviour
 {
-    public TransformVariable parallaxTo;
+    public TransformVariable relativeCamera;
     public enum ParallaxLayer { Closest, Closer, Close, None, Far, Farther, Farthest, Static};
     public ParallaxLayer parallax = ParallaxLayer.None;
     float damping = 5;
-    Vector3 startPosition;
+    Vector3 cameraStartPosition;
 
-    private void Awake()
+    private void Start()
     {
-        startPosition = parallaxTo.value.position;
+        cameraStartPosition = relativeCamera.value.position;
     }
 
     void Update()
     {
-        float multiplier;
+        float depth;
 
         switch (parallax)
         {
             case ParallaxLayer.Closest:
-                multiplier = 0.75f;
+                depth = 0.75f;
                 break;
 
             case ParallaxLayer.Closer:
-                multiplier = 0.5f;
+                depth = 0.5f;
                 break;
 
             case ParallaxLayer.Close:
-                multiplier = 0.25f;
+                depth = 0.25f;
                 break;
 
             case ParallaxLayer.Far:
-                multiplier = -0.25f;
+                depth = -0.25f;
                 break;
 
             case ParallaxLayer.Farther:
-                multiplier = -0.5f;
+                depth = -0.5f;
                 break;
 
             case ParallaxLayer.Farthest:
-                multiplier = -0.75f;
+                depth = -0.75f;
                 break;
 
             case ParallaxLayer.Static:
-                multiplier = -1;
+                depth = 1;
+                // just fix the layer to the camera
+                cameraStartPosition = relativeCamera.value.position;
                 break;
 
             default:
-                multiplier = 0;
+                depth = 0;
                 break;
         }
 
-        Vector3 newPosition = (startPosition - parallaxTo.value.position) * multiplier;
-        transform.position = Vector3.Lerp(transform.position, newPosition, damping * Time.deltaTime);
+        Vector3 newLayerPosition = (cameraStartPosition - relativeCamera.value.position) * depth;
+        transform.position = Vector3.Lerp(transform.position, newLayerPosition, damping * Time.deltaTime);
     }
 }

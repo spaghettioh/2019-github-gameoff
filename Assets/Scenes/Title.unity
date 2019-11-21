@@ -211,10 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 320, y: 240}
+  m_ReferenceResolution: {x: 132, y: 100}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.499
   m_PhysicalUnit: 3
@@ -231,7 +231,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 1577716238}
+  m_Camera: {fileID: 1577716237}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -321,7 +321,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_FontSize: 33
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -573,6 +573,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2753540499434800636, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
       propertyPath: m_TargetTexture
@@ -585,9 +600,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f381438cc1a4c93963b37ed31480a7, type: 3}
---- !u!20 &1577716238 stripped
+--- !u!20 &1577716237 stripped
 Camera:
-  m_CorrespondingSourceObject: {fileID: 2753540499434800636, guid: 15f381438cc1a4c93963b37ed31480a7,
+  m_CorrespondingSourceObject: {fileID: 7482721332047267963, guid: 15f381438cc1a4c93963b37ed31480a7,
     type: 3}
   m_PrefabInstance: {fileID: 1577716236}
   m_PrefabAsset: {fileID: 0}
@@ -630,7 +645,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_FontSize: 51
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2

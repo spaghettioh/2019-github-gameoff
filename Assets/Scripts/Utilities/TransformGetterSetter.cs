@@ -4,42 +4,36 @@ using UnityEngine;
 
 public class TransformGetterSetter : MonoBehaviour
 {
-    public enum Occurrence { Awake, Start, Update, FixedUpdate };
-
     public Transform get;
     public TransformVariable set;
 
-    public Occurrence whenToSet = Occurrence.Update;
+    [Header("When?")]
+    public bool awake;
+    public bool start;
+    public bool update;
+    public bool fixedUpdate;
 
 	void Awake()
 	{
-		if (whenToSet == Occurrence.Awake)
-		{
+		if (awake)
 			set.value = get;
-		}
 	}
 
 	void Start()
 	{
-		if (whenToSet == Occurrence.Start)
-		{
-			set.value = get;
-		}
-	}
+        if (start)
+            set.value = get;
+    }
 
-	void Update()
+    void Update()
 	{
-		if (whenToSet == Occurrence.Update)
-		{
-			set.value = get;
-		}
-	}
+        if (update)
+            set.value = get;
+    }
 
-	void FixedUpdate()
+    void FixedUpdate()
     {
-		if (whenToSet == Occurrence.FixedUpdate)
-		{
-			set.value = get;
-		}
+        if (fixedUpdate)
+            set.value = get;
     }
 }
