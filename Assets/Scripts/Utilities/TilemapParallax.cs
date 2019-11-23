@@ -8,12 +8,15 @@ public class TilemapParallax : MonoBehaviour
     public TransformVariable relativeCamera;
     public enum ParallaxLayer { Closest, Closer, Close, None, Far, Farther, Farthest, Static};
     public ParallaxLayer parallax = ParallaxLayer.None;
+
     float damping = 5;
     Vector3 cameraStartPosition;
+    Vector3 cameraCurrentPosition;
 
     private void Start()
     {
-        cameraStartPosition = relativeCamera.value.position;
+        cameraStartPosition = relativeCamera.Value.position;
+        cameraCurrentPosition = relativeCamera.Value.position;
     }
 
     void Update()
@@ -49,7 +52,7 @@ public class TilemapParallax : MonoBehaviour
             case ParallaxLayer.Static:
                 depth = 1;
                 // just fix the layer to the camera
-                cameraStartPosition = relativeCamera.value.position;
+                cameraStartPosition = relativeCamera.Value.position;
                 break;
 
             default:
@@ -57,7 +60,7 @@ public class TilemapParallax : MonoBehaviour
                 break;
         }
 
-        Vector3 newLayerPosition = (cameraStartPosition - relativeCamera.value.position) * depth;
+        Vector3 newLayerPosition = (cameraStartPosition - cameraCurrentPosition) * depth;
         transform.position = Vector3.Lerp(transform.position, newLayerPosition, damping * Time.deltaTime);
     }
 }

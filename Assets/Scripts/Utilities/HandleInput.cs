@@ -8,15 +8,15 @@ using UnityEngine.Events;
 public class HandleInput : MonoBehaviour
 {
     [Tooltip("If released after this time and before short hold wait, ignore the button press altogether.")]
-    public float ignorePressAfter;
+    public float ignorePressAfter = 0.5f;
     public UnityEvent onKeyPressed;
 
     [Space]
-    public float shortHoldWait;
+    public float shortHoldWait = 1;
     public UnityEvent onKeyShortHold;
 
     [Space]
-    public float longHoldWait;
+    public float longHoldWait = 1.5f;
     public UnityEvent onKeyLongHold;
 
     float keyDownTimer;

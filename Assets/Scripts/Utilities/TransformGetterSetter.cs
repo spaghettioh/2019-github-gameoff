@@ -16,24 +16,24 @@ public class TransformGetterSetter : MonoBehaviour
 	void Awake()
 	{
 		if (awake)
-			set.value = get;
+			set.Value = get;
 	}
 
 	void Start()
 	{
         if (start)
-            set.value = get;
+            set.Value = get;
     }
 
     void Update()
 	{
         if (update)
-            set.value = get;
+            set.Value = get;
     }
 
     void FixedUpdate()
     {
         if (fixedUpdate)
-            set.value = get;
+            set.Value = get;
     }
 }
