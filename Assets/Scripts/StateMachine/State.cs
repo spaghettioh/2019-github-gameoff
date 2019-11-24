@@ -1,5 +1,8 @@
-﻿// COMMENT TO SILENCE
+﻿
+// COMMENT TO SILENCE
 #define BYTHETALE_STATEMACHINE_VERBOSE
+
+using UnityEngine;
 
 namespace ByTheTale.StateMachine
 {
@@ -10,31 +13,31 @@ namespace ByTheTale.StateMachine
         public virtual void PhysicsExecute() { }
         public virtual void PostExecute() { }
 
-        public virtual void OnCollisionEnter(UnityEngine.Collision collision)
+        public virtual void OnCollisionEnter(Collision collision)
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
-        public virtual void OnCollisionStay(UnityEngine.Collision collision) {}
-        public virtual void OnCollisionExit(UnityEngine.Collision collision)
+        public virtual void OnCollisionStay(Collision collision) {}
+        public virtual void OnCollisionExit(Collision collision)
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
 
-        public virtual void OnTriggerEnter(UnityEngine.Collider collider)
+        public virtual void OnTriggerEnter(Collider collider)
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
-        public virtual void OnTriggerStay(UnityEngine.Collider collider) {}
-        public virtual void OnTriggerExit(UnityEngine.Collider collider)
+        public virtual void OnTriggerStay(Collider collider) {}
+        public virtual void OnTriggerExit(Collider collider)
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
 
@@ -43,21 +46,21 @@ namespace ByTheTale.StateMachine
         public virtual void Initialize()
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
 
         public virtual void Enter()
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
 
         public virtual void Exit()
         {
 #if (BYTHETALE_STATEMACHINE_VERBOSE)
-            UnityEngine.Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
+            Debug.Log(machine.name + "." + GetType().Name + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name + "()");
 #endif // BYTHETALE_STATEMACHINE_VERBOSE
         }
 

@@ -9,18 +9,36 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
     public override void Enter()
     {
         base.Enter();
-        //Raccoon.SetAnimator("Idle");
+        Raccoon.SetAnimator("Idle");
     }
 
-    public override void Execute()
+    public override void PhysicsExecute()
     {
-        Debug.Log("Idling");
-        base.Execute();
+        if (Raccoon.IsGrounded.value)
+        {
+            if (!Raccoon.IsAgainstWall.value)
+            {
+                Raccoon.pushing = true;
+            }
+            else
+            {
+                Raccoon.pushing = false;
+            }
 
-        //if (Raccoon.IsGrounded)
-        //{
-        //    Raccoon.ChangeState<RaccoonStateRun>();
-        //}
+            if (Raccoon.RequestingJump)
+            {
+                Raccoon.GroundedJump();
+            }
+
+            if ((float)Mathf.Abs(Raccoon.body.velocity.x) > 1)
+            {
+                Raccoon.ChangeState<RaccoonStateRun>();
+            }
+        }
+        else
+        {
+            Raccoon.ChangeState<RaccoonStateInAir>();
+        }
     }
 
     public override void Exit()
