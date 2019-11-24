@@ -78,7 +78,6 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
 
         CheckIfGrounded();
         CheckIfAgainstWall();
-        CheckIfWallSliding();
 
         // DEBUG STUFF
         debug_grounded = IsGrounded.value;
@@ -152,11 +151,6 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
         Debug.DrawRay(rayStart, Vector2.right * direction * surfaceCheckDistance,
             new Color(0, 1, 0));
-    }
-
-    void CheckIfWallSliding()
-    {
-        IsWallSliding.value = (IsAgainstWall.value && body.velocity.y < -0.01f) || false;
     }
 
     public virtual void SetAnimator(string clip)

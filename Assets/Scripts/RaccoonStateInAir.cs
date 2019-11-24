@@ -14,7 +14,7 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
 
     public override void PhysicsExecute()
     {
-        if (Raccoon.IsWallSliding.value)
+        if (Raccoon.IsAgainstWall.value && Raccoon.body.velocity.y < -0.01f)
         {
             Raccoon.ChangeState<RaccoonStateWallSlide>();
         }

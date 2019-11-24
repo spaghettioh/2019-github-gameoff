@@ -27,6 +27,7 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
 
             if (Raccoon.RequestingJump)
             {
+                Raccoon.pushing = true;
                 Raccoon.GroundedJump();
             }
 
