@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: b776f4f9dc6ed8548a9bc9261f3bf69a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - backFeet: {instanceID: 0}
+  - frontFeet: {instanceID: 0}
+  - frontGrip: {instanceID: 0}
+  - IsGrounded: {instanceID: 0}
+  - IsWallSliding: {instanceID: 0}
+  - jumpAudio: {instanceID: 0}
+  - wallJumpAudio: {instanceID: 0}
+  - doubleJumpAudio: {instanceID: 0}
+  - footstepsAudio: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

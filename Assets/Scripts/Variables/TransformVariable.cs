@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu (menuName = "Variables/Transform")]
 public class TransformVariable : ScriptableObject
 {
     [SerializeField]
