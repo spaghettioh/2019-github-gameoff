@@ -8,37 +8,44 @@ public class TitleScreen : MonoBehaviour
 {
     public FloatVariable inputHoldTimer;
 
-    public Slider[] choiceSliders;
+    public List<MenuOption> menuOptions;
+
+    //public Slider[] choiceSliders;
     int currentChoice = 0;
 
     void Start()
     {
         gameObject.SetActive(false);
 
-        foreach (Slider choice in choiceSliders)
+        foreach (MenuOption option in menuOptions)
         {
-            choice.gameObject.SetActive(false);
+            option.optionSlider.gameObject.SetActive(false);
         }
 
-        choiceSliders[currentChoice].gameObject.SetActive(true);
+        menuOptions[currentChoice].optionSlider.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-       choiceSliders[currentChoice].value = inputHoldTimer.value;
+        menuOptions[currentChoice].optionSlider.value = inputHoldTimer.value;
     }
 
     public void MoveSelector()
     {
-        choiceSliders[currentChoice].gameObject.SetActive(false);
+        menuOptions[currentChoice].optionSlider.gameObject.SetActive(false);
         currentChoice += 1;
 
-        if (currentChoice == choiceSliders.Length)
+        if (currentChoice == menuOptions.Count)
         {
             currentChoice = 0;
         }
 
-        choiceSliders[currentChoice].gameObject.SetActive(true);
+        menuOptions[currentChoice].optionSlider.gameObject.SetActive(true);
+    }
+
+    public void SelectMenuOption()
+    {
+        menuOptions[currentChoice].onOptionSelection.Invoke();
     }
 }
