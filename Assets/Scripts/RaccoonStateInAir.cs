@@ -9,14 +9,42 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
     public override void Enter()
     {
         base.Enter();
-        Raccoon.SetAnimator("InAir");
+        Raccoon.SetAnimator("Jump");
     }
 
     public override void PhysicsExecute()
     {
-        if (Raccoon.IsAgainstWall.value && Raccoon.body.velocity.y < -0.01f)
+        if (Raccoon.body.velocity.y < -0.01f)
         {
-            Raccoon.ChangeState<RaccoonStateWallSlide>();
+
+            if (Raccoon.IsAgainstWall.value)
+            {
+
+                Raccoon.ChangeState<RaccoonStateWallSlide>();
+                return;
+            }
+            else
+            {
+                Raccoon.SetAnimator("Fall");
+
+            }
+        }
+
+        if (Raccoon.IsGrounded.value)
+        {
+            if (Mathf.Abs(Raccoon.body.velocity.x) > 0.01f)
+            {
+                Raccoon.push = true;
+                Raccoon.ChangeState<RaccoonStateRun>();
+                return;
+
+            }
+            else
+            {
+                Raccoon.ChangeState<RaccoonStateIdle>();
+                return;
+
+            }
         }
 
         if (Raccoon.RequestingJump)
@@ -24,11 +52,12 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
             // TODO: mid-air jump logic goes here
             Raccoon.RequestingJump = false;
         }
+    }
 
-        if (Raccoon.IsGrounded.value)
-        {
-            Raccoon.ChangeState<RaccoonStateIdle>();
-        }
+    public override void Execute()
+    {
+
+
     }
 
     public override void Exit()

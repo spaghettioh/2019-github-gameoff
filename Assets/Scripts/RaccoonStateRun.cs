@@ -17,6 +17,7 @@ public class RaccoonStateRun : ByTheTale.StateMachine.State
         // Update orientation
         if (Raccoon.body.velocity.x < -0.1f)
         {
+            Raccoon.SetAnimator("Skid");
             Raccoon.direction = -1;
         }
         else
@@ -27,8 +28,14 @@ public class RaccoonStateRun : ByTheTale.StateMachine.State
         if (Raccoon.IsAgainstWall.value || (float)Mathf.Abs(Raccoon.body.velocity.x) < 0.1f)
         {
             Raccoon.ChangeState<RaccoonStateIdle>();
+            return;
         }
 
+        if (!Raccoon.IsGrounded.value)
+        {
+            Raccoon.ChangeState<RaccoonStateInAir>();
+            return;
+        }
         if (Raccoon.RequestingJump)
         {
             Raccoon.GroundedJump();
@@ -38,11 +45,11 @@ public class RaccoonStateRun : ByTheTale.StateMachine.State
         {
             Raccoon.RequestingJump = false;
         }
+    }
 
-        if (!Raccoon.IsGrounded.value)
-        {
-            Raccoon.ChangeState<RaccoonStateInAir>();
-        }
+    public override void Execute()
+    {
+        
     }
 
     public override void Exit()

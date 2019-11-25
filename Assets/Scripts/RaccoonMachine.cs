@@ -46,7 +46,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     public int direction = 1;
     public Animator anim;
     public Rigidbody2D body;
-    public bool pushing;
+    public bool push;
 
     [Header("Debug")]
     [SerializeField] bool debug_grounded;
@@ -64,7 +64,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         body = GetComponent<Rigidbody2D>();
 
         // Reset all the things
-        pushing = false;
+        push = false;
         RequestingJump = false;
         IsGrounded.value = false;
         IsAgainstWall.value = false;
@@ -76,8 +76,6 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     {
         base.Update();
 
-        CheckIfGrounded();
-        CheckIfAgainstWall();
 
         // DEBUG STUFF
         debug_grounded = IsGrounded.value;
@@ -85,7 +83,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         debug_sliding = IsWallSliding.value;
         debug_xVelocity = (float)System.Math.Round(body.velocity.x, 2);
         debug_yVelocity = (float)System.Math.Round(body.velocity.y, 2);
-        debug_pushing = pushing;
+        debug_pushing = push;
         debug_RequestingJump = RequestingJump;
 
         // Useful for troubleshooting
@@ -105,10 +103,22 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     {
         base.FixedUpdate();
 
-        if (pushing)
+        CheckIfGrounded();
+        CheckIfAgainstWall();
+
+        if (push && body.velocity.x < moveForce)
         {
-            // Always blue. Always blue. Always move. Always move right.
-            body.AddForce(Vector2.right * moveForce, ForceMode2D.Force);
+            if (body.velocity.x < 0)
+            {
+
+                body.AddForce(Vector2.right * moveForce * 2, ForceMode2D.Force);
+            }
+            else
+            {
+                // Always blue. Always blue. Always move. Always move right.
+                body.AddForce(Vector2.right * moveForce, ForceMode2D.Force);
+
+            }
         }
 
         transform.localScale = new Vector3(1 * direction, 1, 1);
@@ -155,6 +165,10 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
 
     public virtual void SetAnimator(string clip)
     {
-        anim.SetTrigger(clip);
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName(clip))
+        {
+            anim.SetTrigger(clip);
+
+        }
     }
 }

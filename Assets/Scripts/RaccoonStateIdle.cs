@@ -18,28 +18,35 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
         {
             if (!Raccoon.IsAgainstWall.value)
             {
-                Raccoon.pushing = true;
+                Raccoon.push = true;
             }
             else
             {
-                Raccoon.pushing = false;
+                Raccoon.push = false;
             }
 
-            if (Raccoon.RequestingJump)
-            {
-                Raccoon.pushing = true;
-                Raccoon.GroundedJump();
-            }
+
 
             if ((float)Mathf.Abs(Raccoon.body.velocity.x) > 1)
             {
                 Raccoon.ChangeState<RaccoonStateRun>();
+                return;
             }
         }
         else
         {
             Raccoon.ChangeState<RaccoonStateInAir>();
+            return;
         }
+        if (Raccoon.RequestingJump)
+        {
+            Raccoon.push = true;
+            Raccoon.GroundedJump();
+        }
+    }
+
+    public override void Execute()
+    {
     }
 
     public override void Exit()
