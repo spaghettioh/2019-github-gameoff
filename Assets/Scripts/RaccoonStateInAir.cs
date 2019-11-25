@@ -30,6 +30,22 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
             }
         }
 
+        if (Raccoon.IsAgainstWall.value)
+        {
+            Raccoon.push = false;
+
+            if (Raccoon.RequestingJump)
+            {
+                Raccoon.direction *= -1;
+                Raccoon.body.velocity += new Vector2(Raccoon.moveSpeed * Raccoon.direction, (Raccoon.jumpForce * Raccoon.jumpMultiplier));
+                //Raccoon.body.AddForce(new Vector2((Raccoon.moveForce + 2) * Raccoon.direction, Raccoon.jumpForce + 2 + Raccoon.jumpModifier), ForceMode2D.Impulse);
+                Raccoon.RequestingJump = false;
+                Raccoon.wallJumpAudio.PlayRandomSound();
+                Debug.Log("JumpForce: " + Raccoon.jumpForce + "\nJumpMultiplier: " + Raccoon.jumpMultiplier);
+            }
+        }
+
+
         if (Raccoon.IsGrounded.value)
         {
             if (Mathf.Abs(Raccoon.body.velocity.x) > 0.01f)

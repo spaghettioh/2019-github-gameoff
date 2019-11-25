@@ -16,11 +16,15 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     }
 
     [Header("Movement")]
-    public float moveForce = 3.0f;
-    public float jumpForce = 5.0f;
-    public float jumpModifier = 0;
+    public float moveSpeed = 4;
+    public FloatVariable moveSpeedMultiplierStat;
+    public float jumpForce = 8;
+    public FloatVariable jumpMultiplierStat;
+    // A separate variable is needed because it also checks the input hold meter
+    public float jumpMultiplier;
     public FloatVariable inputHoldTimer;
     public Slider jumpHoldProgressBar;
+
     [Tooltip("Attempts to get rid of floaty jumping.")]
     public float fallMultiplier = 2.5f;
     [Tooltip("Allows player to release button mid-jump for a short hop.")]
@@ -60,7 +64,10 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     [SerializeField] float debug_yVelocity;
     [SerializeField] bool debug_pushing;
     [SerializeField] bool debug_RequestingJump;
-    float slomo = .5f;
+
+    // F7 to turn on/off
+    public float slomoSpeed = .5f;
+    public bool slomoOnOff;
 
     public void Awake()
     {
@@ -81,6 +88,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         base.Update();
 
         SetJumpMultiplier();
+        moveSpeed *= moveSpeedMultiplierStat.value;
         
 
         // DEBUG STUFF
@@ -92,17 +100,14 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         debug_pushing = push;
         debug_RequestingJump = RequestingJump;
 
-        // Useful for troubleshooting
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    slomo = .1f;
-        //}
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    slomo = .5f;
-        //}
-
-        //Time.timeScale = slomo;
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            slomoOnOff = !slomoOnOff;
+        }
+        if (slomoOnOff)
+        {
+            Time.timeScale = slomoSpeed;
+        }
     }
 
     public override void FixedUpdate()
@@ -112,31 +117,62 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         CheckIfGrounded();
         CheckIfAgainstWall();
 
-        if (push && body.velocity.x < moveForce)
+        if (body.velocity.y < -0.01f)
         {
-            if (body.velocity.x < 0)
-            {
+            body.gravityScale = fallMultiplier;
+        }
+        else if (body.velocity.y > 0.1f)
+        {
+            body.gravityScale = lowJumpMultiplier;
+        }
+        else
+        {
+            body.gravityScale = 1;
+        }
 
-                body.AddForce(Vector2.right * moveForce * 2, ForceMode2D.Force);
+        // TODO: Can this be simplied to a lerp?
+        if (push)
+        {
+            if (body.velocity.x < moveSpeed)
+            {
+                if (body.velocity.x < 0)
+                {
+                    // Force the raccoon back to the right.
+                    body.AddForce(Vector2.right * moveSpeed * 2.5f, ForceMode2D.Force);
+                }
+                else
+                {
+                    // Always blue. Always blue. Always move. Always move right.
+                    body.AddForce(Vector2.right * moveSpeed, ForceMode2D.Force);
+
+                }
+            }
+
+            // Slow the raccon if moving too quickly
+            if (body.velocity.x > moveSpeed)
+            {
+                body.drag = 5;
             }
             else
             {
-                // Always blue. Always blue. Always move. Always move right.
-                body.AddForce(Vector2.right * moveForce, ForceMode2D.Force);
-
+                body.drag = 0;
             }
         }
 
+        // Set the raccoon direction
         transform.localScale = new Vector3(1 * direction, 1, 1);
     }
 
+    // TODO: Refactor this to be generic for any jump request
     public void GroundedJump()
     {
         RequestingJump = false;
         IsGrounded.SetValue(false);
-        body.AddForce(Vector2.up * (jumpForce + jumpModifier), ForceMode2D.Impulse);
+        body.velocity += Vector2.up * (jumpForce * jumpMultiplier);
+        //body.AddForce(Vector2.up * (jumpForce + jumpModifier), ForceMode2D.Impulse);
         RequestingJump = false;
         jumpAudio.PlayRandomSound();
+        Debug.Log("JumpForce: " + jumpForce + "\nJumpMultiplier: " + jumpMultiplier);
 
         ChangeState<RaccoonStateInAir>();
     }
@@ -184,9 +220,17 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
             inputHoldNormalized = 2 - t;
         }
 
-        jumpHoldProgressBar.value = inputHoldNormalized;
+        if (inputHoldNormalized > 0)
+        {
+            jumpHoldProgressBar.gameObject.SetActive(true);
+            jumpHoldProgressBar.value = inputHoldNormalized;
+        }
+        else
+        {
+            jumpHoldProgressBar.gameObject.SetActive(false);
+        }
 
-        jumpModifier = inputHoldNormalized;
+        jumpMultiplier = (jumpMultiplierStat.value + (inputHoldNormalized * .5f));
     }
 
     public virtual void SetAnimator(string clip)
