@@ -10,16 +10,18 @@ public class RaccoonStateWallSlide : ByTheTale.StateMachine.State
     {
         base.Enter();
         Raccoon.SetAnimator("WallSlide");
-        Raccoon.body.drag = 5;
     }
 
     public override void PhysicsExecute()
     {
+        Raccoon.body.drag = Raccoon.jumpModifier * 1000;
+
         if (Raccoon.RequestingJump)
         {
             Raccoon.direction *= -1;
             Raccoon.push = false;
-            Raccoon.body.AddForce(new Vector2((Raccoon.moveForce + 2) * Raccoon.direction, Raccoon.jumpForce + 2), ForceMode2D.Impulse);
+            Raccoon.body.drag = 0;
+            Raccoon.body.AddForce(new Vector2((Raccoon.moveForce + 2) * Raccoon.direction, Raccoon.jumpForce + 2 + Raccoon.jumpModifier), ForceMode2D.Impulse);
             Raccoon.RequestingJump = false;
             Raccoon.wallJumpAudio.PlayRandomSound();
 

@@ -27,7 +27,7 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
 
 
 
-            if ((float)Mathf.Abs(Raccoon.body.velocity.x) > 1)
+            if ((float)Mathf.Abs(Raccoon.body.velocity.x) > .1f)
             {
                 Raccoon.ChangeState<RaccoonStateRun>();
                 return;

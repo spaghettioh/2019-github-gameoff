@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
 {
@@ -17,6 +18,9 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     [Header("Movement")]
     public float moveForce = 3.0f;
     public float jumpForce = 5.0f;
+    public float jumpModifier = 0;
+    public FloatVariable inputHoldTimer;
+    public Slider jumpHoldProgressBar;
     [Tooltip("Attempts to get rid of floaty jumping.")]
     public float fallMultiplier = 2.5f;
     [Tooltip("Allows player to release button mid-jump for a short hop.")]
@@ -76,6 +80,8 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     {
         base.Update();
 
+        SetJumpMultiplier();
+        
 
         // DEBUG STUFF
         debug_grounded = IsGrounded.value;
@@ -128,7 +134,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     {
         RequestingJump = false;
         IsGrounded.SetValue(false);
-        body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        body.AddForce(Vector2.up * (jumpForce + jumpModifier), ForceMode2D.Impulse);
         RequestingJump = false;
         jumpAudio.PlayRandomSound();
 
@@ -161,6 +167,26 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
         Debug.DrawRay(rayStart, Vector2.right * direction * surfaceCheckDistance,
             new Color(0, 1, 0));
+    }
+
+    public virtual void SetJumpMultiplier()
+    {
+        float t = inputHoldTimer.value;
+        float inputHoldNormalized = 0;
+
+        if (t > 0 && t < 1)
+        {
+            inputHoldNormalized += t;
+
+        }
+        else if (t > 1 && t < 2)
+        {
+            inputHoldNormalized = 2 - t;
+        }
+
+        jumpHoldProgressBar.value = inputHoldNormalized;
+
+        jumpModifier = inputHoldNormalized;
     }
 
     public virtual void SetAnimator(string clip)

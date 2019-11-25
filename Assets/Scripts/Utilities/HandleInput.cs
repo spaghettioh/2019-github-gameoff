@@ -12,12 +12,18 @@ public class HandleInput : MonoBehaviour
     public UnityEvent onKeyPressed;
 
     [Space]
+    [Space]
     public float shortHoldWait = 1;
     public UnityEvent onKeyShortHold;
 
     [Space]
+    [Space]
     public float longHoldWait = 1.5f;
     public UnityEvent onKeyLongHold;
+
+    [Space]
+    [Space]
+    public FloatVariable holdTimer;
 
     float keyDownTimer;
     protected List<KeyCode> activeInputs = new List<KeyCode>();
@@ -40,6 +46,9 @@ public class HandleInput : MonoBehaviour
 
     public void Update()
     {
+        if (holdTimer)
+            holdTimer.value = keyDownTimer;
+        
         // Record which inputs are pressed
         List<KeyCode> pressedInput = new List<KeyCode>();
 
