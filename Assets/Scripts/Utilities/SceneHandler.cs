@@ -11,6 +11,8 @@ public class SceneHandler : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
+
         if (thisSceneName == "AlleyScene")
         {
             LoadASceneAsync("Title");
