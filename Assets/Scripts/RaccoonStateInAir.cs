@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RaccoonStateInAir : ByTheTale.StateMachine.State
 {
@@ -16,17 +14,14 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
     {
         if (Raccoon.body.velocity.y < -0.01f)
         {
-
             if (Raccoon.IsAgainstWall.value)
             {
-
                 Raccoon.ChangeState<RaccoonStateWallSlide>();
                 return;
             }
             else
             {
                 Raccoon.SetAnimator("Fall");
-
             }
         }
 
@@ -41,10 +36,8 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
                 //Raccoon.body.AddForce(new Vector2((Raccoon.moveForce + 2) * Raccoon.direction, Raccoon.jumpForce + 2 + Raccoon.jumpModifier), ForceMode2D.Impulse);
                 Raccoon.RequestingJump = false;
                 Raccoon.wallJumpAudio.PlayRandomSound();
-                Debug.Log("JumpForce: " + Raccoon.jumpForce + "\nJumpMultiplier: " + Raccoon.jumpMultiplier);
             }
         }
-
 
         if (Raccoon.IsGrounded.value)
         {
@@ -53,13 +46,11 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
                 Raccoon.push = true;
                 Raccoon.ChangeState<RaccoonStateRun>();
                 return;
-
             }
             else
             {
                 Raccoon.ChangeState<RaccoonStateIdle>();
                 return;
-
             }
         }
 
@@ -68,12 +59,6 @@ public class RaccoonStateInAir : ByTheTale.StateMachine.State
             // TODO: mid-air jump logic goes here
             Raccoon.RequestingJump = false;
         }
-    }
-
-    public override void Execute()
-    {
-
-
     }
 
     public override void Exit()

@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 01f4eb1c73693428d923f1520032e7f9, type: 2}
   m_HaloStrength: 0.5
@@ -10210,17 +10210,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 27e961703508b4e36b846d8d223d4620, type: 2}
+      objectReference: {fileID: 2100000, guid: 749db22591669485fbfe2e724e933571, type: 2}
     - target: {fileID: 714005323721223314, guid: 15d69bf5e75789748a67cb30c7b512cc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 27e961703508b4e36b846d8d223d4620, type: 2}
+      objectReference: {fileID: 2100000, guid: 749db22591669485fbfe2e724e933571, type: 2}
     - target: {fileID: 7791142858155125263, guid: 15d69bf5e75789748a67cb30c7b512cc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 27e961703508b4e36b846d8d223d4620, type: 2}
+      objectReference: {fileID: 2100000, guid: 749db22591669485fbfe2e724e933571, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d69bf5e75789748a67cb30c7b512cc, type: 3}
 --- !u!1001 &1652477819
@@ -11580,6 +11580,10 @@ PrefabInstance:
     - target: {fileID: 1887540328383792, guid: ad1cd4801b8d762459a6364345c747a3, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887540328383792, guid: ad1cd4801b8d762459a6364345c747a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4441841626666994, guid: ad1cd4801b8d762459a6364345c747a3, type: 3}
       propertyPath: m_LocalPosition.x

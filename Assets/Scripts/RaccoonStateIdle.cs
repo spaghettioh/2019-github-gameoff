@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RaccoonStateIdle : ByTheTale.StateMachine.State
 {
@@ -25,9 +23,7 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
                 Raccoon.push = false;
             }
 
-
-
-            if ((float)Mathf.Abs(Raccoon.body.velocity.x) > .1f)
+            if (Mathf.Abs(Raccoon.body.velocity.x) > .1f)
             {
                 Raccoon.ChangeState<RaccoonStateRun>();
                 return;
@@ -43,10 +39,6 @@ public class RaccoonStateIdle : ByTheTale.StateMachine.State
             Raccoon.push = true;
             Raccoon.GroundedJump();
         }
-    }
-
-    public override void Execute()
-    {
     }
 
     public override void Exit()

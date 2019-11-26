@@ -37,12 +37,10 @@ public class HandleInput : MonoBehaviour
     private void Start()
     {
         if (shortHoldWait < ignorePressAfter)
-            Debug.LogError("Short Hold Wait (" + shortHoldWait +
-                ") can't be lower than Ignore Press After (" + ignorePressAfter + ")");
+            Debug.LogError("Short Hold Wait (" + shortHoldWait + ") can't be lower than Ignore Press After (" + ignorePressAfter + ")");
 
         if (longHoldWait < shortHoldWait)
-            Debug.LogError("Long Hold Wait (" + longHoldWait +
-                ") can't be lower than Short Hold Wait (" + shortHoldWait + ")");
+            Debug.LogError("Long Hold Wait (" + longHoldWait + ") can't be lower than Short Hold Wait (" + shortHoldWait + ")");
 
         if (Input.anyKey || Input.anyKeyDown)
             keyHeldPrevious = true;

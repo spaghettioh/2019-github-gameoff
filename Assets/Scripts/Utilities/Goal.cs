@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using Cinemachine;
 using UnityEngine.UI;
@@ -11,19 +9,10 @@ public class Goal : MonoBehaviour
     public CinemachineVirtualCamera cameraToZoom;
     public Image fader;
     public Text text;
-    //public HandleInput disableInput;
-    //public HandleInput enableInput;
-    //float fade = 0;
     Color faded = new Color(0, 0, 0, 0);
-    //float show = 0;
     Color shown = new Color(1, 1, 1, 0);
-    //float slow = 1;
     bool crossed;
     float slomo = 1;
-
-    private void Start()
-    {
-    }
 
     void Update()
     {
@@ -31,7 +20,7 @@ public class Goal : MonoBehaviour
         {
             if (slomo > 0)
             {
-                slomo *= .97f;
+                slomo *= .95f;
 
                 if (slomo < .01f)
                 {

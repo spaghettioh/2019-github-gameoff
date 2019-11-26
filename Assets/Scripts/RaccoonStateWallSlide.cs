@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RaccoonStateWallSlide : ByTheTale.StateMachine.State
 {
@@ -29,7 +27,6 @@ public class RaccoonStateWallSlide : ByTheTale.StateMachine.State
             //Raccoon.body.AddForce(new Vector2((Raccoon.moveForce + 2) * Raccoon.direction, Raccoon.jumpForce + 2 + Raccoon.jumpModifier), ForceMode2D.Impulse);
             Raccoon.RequestingJump = false;
             Raccoon.wallJumpAudio.PlayRandomSound();
-            Debug.Log("JumpForce: " + Raccoon.jumpForce + "\nJumpMultiplier: " + Raccoon.jumpMultiplier);
 
             Raccoon.ChangeState<RaccoonStateInAir>();
             return;
@@ -39,7 +36,6 @@ public class RaccoonStateWallSlide : ByTheTale.StateMachine.State
         {
             Raccoon.ChangeState<RaccoonStateInAir>();
             return;
-
         }
 
         if (Raccoon.IsGrounded.value)

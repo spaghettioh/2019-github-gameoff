@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class TitleScreen : MonoBehaviour
 {
     public FloatVariable inputHoldTimer;
-
     public List<MenuOption> menuOptions;
 
-    //public Slider[] choiceSliders;
-    int currentChoice = 0;
+    int currentChoice;
 
     void Start()
     {
@@ -25,7 +20,6 @@ public class TitleScreen : MonoBehaviour
         menuOptions[currentChoice].optionSlider.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         menuOptions[currentChoice].optionSlider.value = inputHoldTimer.value;

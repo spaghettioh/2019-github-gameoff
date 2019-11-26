@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
@@ -90,8 +88,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         SetJumpMultiplier();
         moveSpeed *= moveSpeedMultiplierStat.value;
         
-
-        // DEBUG STUFF
+        // ======= DEBUG STUFF
         debug_grounded = IsGrounded.value;
         debug_againstWall = IsAgainstWall.value;
         debug_sliding = IsWallSliding.value;
@@ -108,6 +105,7 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         {
             Time.timeScale = slomoSpeed;
         }
+        // ======== DEBUG STUFF
     }
 
     public override void FixedUpdate()
@@ -172,7 +170,6 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         //body.AddForce(Vector2.up * (jumpForce + jumpModifier), ForceMode2D.Impulse);
         RequestingJump = false;
         jumpAudio.PlayRandomSound();
-        Debug.Log("JumpForce: " + jumpForce + "\nJumpMultiplier: " + jumpMultiplier);
 
         ChangeState<RaccoonStateInAir>();
     }
@@ -181,28 +178,15 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
     {
         Vector2 backFeetStart = backFeet.position;
         Vector2 frontFeetStart = frontFeet.position;
-        bool groundedResult = (Physics2D.Raycast(backFeetStart, Vector2.down,
-            surfaceCheckDistance, groundLayer) ||
-            Physics2D.Raycast(frontFeetStart, Vector2.down,
-            surfaceCheckDistance, groundLayer));
+        bool groundedResult = Physics2D.Raycast(backFeetStart, Vector2.down, surfaceCheckDistance, groundLayer) ||
+                              Physics2D.Raycast(frontFeetStart, Vector2.down, surfaceCheckDistance, groundLayer);
         IsGrounded.SetValue(groundedResult || false);
-
-        // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
-        Debug.DrawRay(backFeetStart, Vector2.down * surfaceCheckDistance,
-            new Color(1, 0, 0));
-        Debug.DrawRay(frontFeetStart, Vector2.down * surfaceCheckDistance,
-            new Color(1, 0, 0));
     }
 
     void CheckIfAgainstWall()
     {
         Vector2 rayStart = frontGrip.position;
-        IsAgainstWall.value = Physics2D.Raycast(rayStart, Vector2.right * direction,
-            surfaceCheckDistance, groundLayer) || false;
-
-        // TODO: Add some kind of in-game debug that allows this stuff to be turned on and off
-        Debug.DrawRay(rayStart, Vector2.right * direction * surfaceCheckDistance,
-            new Color(0, 1, 0));
+        IsAgainstWall.value = Physics2D.Raycast(rayStart, Vector2.right * direction, surfaceCheckDistance, groundLayer) || false;
     }
 
     public virtual void SetJumpMultiplier()
@@ -238,7 +222,6 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName(clip))
         {
             anim.SetTrigger(clip);
-
         }
     }
 }

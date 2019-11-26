@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
@@ -18,6 +16,7 @@ public class SceneHandler : MonoBehaviour
             LoadASceneAsync("Title");
         }
     }
+
     public void LoadASceneAsync(string sceneName)
     {
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -30,27 +29,8 @@ public class SceneHandler : MonoBehaviour
 
     public void LoadNextLevel(string sceneName)
 	{
-		SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        if (thisSceneName != "AlleyScene")
-		{
-			SceneManager.UnloadSceneAsync(thisSceneName);
-		}
-	}
-
-    public void PauseUnpauseGame()
-	{
-		if (!gameIsPaused)
-		{
-			gameIsPaused = true;
-
-			SceneManager.LoadSceneAsync("Pause", LoadSceneMode.Additive);
-		}
-        else
-		{
-			SceneManager.UnloadSceneAsync("Pause");
-            gameIsPaused = false;
-		}
+        LoadASceneAsync(sceneName);
+        Debug.LogError("Load Next Level is deprecated.");
 	}
 
     public void QuitGame()
