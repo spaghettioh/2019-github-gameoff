@@ -24,6 +24,7 @@ public class SceneHandler : MonoBehaviour
         if (thisSceneName != "AlleyScene")
         {
             SceneManager.UnloadSceneAsync(thisSceneName);
+            Destroy(this);
         }
     }
 

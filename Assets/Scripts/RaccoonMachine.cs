@@ -181,12 +181,21 @@ public class RaccoonMachine : ByTheTale.StateMachine.MachineBehaviour
         bool groundedResult = Physics2D.Raycast(backFeetStart, Vector2.down, surfaceCheckDistance, groundLayer) ||
                               Physics2D.Raycast(frontFeetStart, Vector2.down, surfaceCheckDistance, groundLayer);
         IsGrounded.SetValue(groundedResult || false);
+
+        Debug.DrawRay(backFeetStart, Vector2.down * surfaceCheckDistance,
+            new Color(1, 0, 0));
+        Debug.DrawRay(frontFeetStart, Vector2.down * surfaceCheckDistance,
+            new Color(1, 0, 0));
     }
 
     void CheckIfAgainstWall()
     {
         Vector2 rayStart = frontGrip.position;
-        IsAgainstWall.value = Physics2D.Raycast(rayStart, Vector2.right * direction, surfaceCheckDistance, groundLayer) || false;
+        bool againstWallResult = Physics2D.Raycast(rayStart, Vector2.right * direction, surfaceCheckDistance, groundLayer);
+        IsAgainstWall.SetValue(againstWallResult || false);
+
+        Debug.DrawRay(rayStart, Vector2.right * direction * surfaceCheckDistance,
+            new Color(0, 1, 0));
     }
 
     public virtual void SetJumpMultiplier()

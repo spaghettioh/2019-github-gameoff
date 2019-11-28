@@ -43,11 +43,25 @@ public class HandleInput : MonoBehaviour
             Debug.LogError("Long Hold Wait (" + longHoldWait + ") can't be lower than Short Hold Wait (" + shortHoldWait + ")");
 
         if (Input.anyKey || Input.anyKeyDown)
+        {
             keyHeldPrevious = true;
+            Debug.Log("keyHeldPrevious");
+            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKey(code))
+                {
+                    Debug.Log(code);
+                }
+            }
+
+        }
+
+        holdTimer.value = 0;
     }
 
     public void Update()
     {
+
         if (holdTimer)
             holdTimer.value = keyDownTimer;
 
@@ -87,20 +101,20 @@ public class HandleInput : MonoBehaviour
         }
 
         // These are for immediate activation instead of release activation
-        if (activeInputs.Count > 0 && activateImmediately)
+        if (!keyHeldPrevious)
         {
-            onKeyPressed.Invoke();
-            return;
-        }
-        if (keyDownTimer > shortHoldWait && activateAtShort)
-        {
-            onKeyShortHold.Invoke();
-            return;
-        }
-        if (keyDownTimer > longHoldWait && activateAtLong)
-        {
-            onKeyLongHold.Invoke();
-            return;
+            if (activeInputs.Count > 0 && activateImmediately)
+            {
+                onKeyPressed.Invoke();
+            }
+            if (keyDownTimer > shortHoldWait && activateAtShort)
+            {
+                onKeyShortHold.Invoke();
+            }
+            if (keyDownTimer > longHoldWait && activateAtLong)
+            {
+                onKeyLongHold.Invoke();
+            }
         }
 
         // This condition means all keys were released just now

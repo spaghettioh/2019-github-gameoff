@@ -10,7 +10,7 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         foreach (MenuOption option in menuOptions)
         {

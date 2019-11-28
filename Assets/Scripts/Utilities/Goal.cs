@@ -13,6 +13,12 @@ public class Goal : MonoBehaviour
     Color shown = new Color(1, 1, 1, 0);
     bool crossed;
     float slomo = 1;
+    float startingSize;
+
+    private void Start()
+    {
+        startingSize = cameraToZoom.m_Lens.OrthographicSize;
+    }
 
     void Update()
     {
@@ -34,7 +40,7 @@ public class Goal : MonoBehaviour
             fader.color = faded;
             text.color = shown;
 
-            cameraToZoom.m_Lens.OrthographicSize = 2 + (slomo * 2);
+            cameraToZoom.m_Lens.OrthographicSize = (startingSize - 2)  + (slomo * 2);
             Time.timeScale = slomo;
         }
     }

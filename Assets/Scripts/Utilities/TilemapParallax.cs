@@ -23,6 +23,8 @@ public class TilemapParallax : MonoBehaviour
     {
         float depth;
 
+        cameraCurrentPosition = relativeCamera.Value.position;
+
         switch (parallax)
         {
             case ParallaxLayer.Closest:
