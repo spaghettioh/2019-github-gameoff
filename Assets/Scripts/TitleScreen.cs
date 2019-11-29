@@ -22,7 +22,7 @@ public class TitleScreen : MonoBehaviour
 
     void FixedUpdate()
     {
-        menuOptions[currentChoice].optionSlider.value = inputHoldTimer.value;
+        menuOptions[currentChoice].optionSlider.value = inputHoldTimer.value * 2;
     }
 
     public void MoveSelector()
