@@ -106,15 +106,25 @@ public class HandleInput : MonoBehaviour
             if (activeInputs.Count > 0 && activateImmediately)
             {
                 onKeyPressed.Invoke();
+                keyHeldPrevious = true;
+                return;
             }
             if (keyDownTimer > shortHoldWait && activateAtShort)
             {
                 onKeyShortHold.Invoke();
+                keyHeldPrevious = true;
+                return;
             }
             if (keyDownTimer > longHoldWait && activateAtLong)
             {
                 onKeyLongHold.Invoke();
+                keyHeldPrevious = true;
+                return;
             }
+        }
+        else
+        {
+            return;
         }
 
         // This condition means all keys were released just now

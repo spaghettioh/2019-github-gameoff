@@ -624,6 +624,11 @@ PrefabInstance:
       propertyPath: thisSceneName
       value: Title
       objectReference: {fileID: 0}
+    - target: {fileID: 2202863581179749304, guid: 5bef84b6cdec9e442ba57c94e02d73b0,
+        type: 3}
+      propertyPath: nextSceneName
+      value: Level00Intro
+      objectReference: {fileID: 0}
     - target: {fileID: 7198181935041338600, guid: 5bef84b6cdec9e442ba57c94e02d73b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3365,7 +3370,7 @@ PrefabInstance:
     - target: {fileID: 6761901698789650269, guid: 130bdba57e1552045807d16d2eae3888,
         type: 3}
       propertyPath: gameEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6761901698789650269, guid: 130bdba57e1552045807d16d2eae3888,
         type: 3}

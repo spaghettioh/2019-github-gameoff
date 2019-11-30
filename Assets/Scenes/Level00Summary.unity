@@ -314,7 +314,7 @@ PrefabInstance:
     - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
         type: 3}
       propertyPath: onKeyPressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadNextLevel
+      value: LoadASceneAsync
       objectReference: {fileID: 0}
     - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
         type: 3}
@@ -329,7 +329,7 @@ PrefabInstance:
     - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
         type: 3}
       propertyPath: onKeyPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5921020680962899448, guid: 949956341cc1e2d4d956206219d30234,
         type: 3}
@@ -1034,7 +1034,12 @@ PrefabInstance:
     - target: {fileID: 2202863581179749304, guid: 5bef84b6cdec9e442ba57c94e02d73b0,
         type: 3}
       propertyPath: thisSceneName
-      value: LevelSummary00
+      value: Level00Summary
+      objectReference: {fileID: 0}
+    - target: {fileID: 2202863581179749304, guid: 5bef84b6cdec9e442ba57c94e02d73b0,
+        type: 3}
+      propertyPath: nextSceneName
+      value: Level01Intro
       objectReference: {fileID: 0}
     - target: {fileID: 7198181935041338600, guid: 5bef84b6cdec9e442ba57c94e02d73b0,
         type: 3}
