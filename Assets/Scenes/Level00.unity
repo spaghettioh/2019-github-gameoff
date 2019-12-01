@@ -9264,7 +9264,7 @@ PrefabInstance:
     - target: {fileID: 7482721332047267963, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
       propertyPath: orthographic size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7482721332047267963, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
@@ -9329,12 +9329,12 @@ PrefabInstance:
     - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.46521103
+      value: 4.0274477
       objectReference: {fileID: 0}
     - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0015730858
+      value: 0.029860973
       objectReference: {fileID: 0}
     - target: {fileID: 3471031188769976867, guid: 15f381438cc1a4c93963b37ed31480a7,
         type: 3}
@@ -9556,12 +9556,12 @@ PrefabInstance:
         type: 3}
       propertyPath: clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: e8a1cee4e2d123f40afc897adbdc1e4d, type: 3}
+      objectReference: {fileID: 8300000, guid: 3559dd9157a844e4abf02e224384a627, type: 3}
     - target: {fileID: 701275199242785682, guid: 0a0d325ab03511444802a9d94e32207f,
         type: 3}
       propertyPath: clips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 8790033911f82fc48967f167ad6db00e, type: 3}
+      objectReference: {fileID: 8300000, guid: aae13e6b78ded4c7d9659bb37518a8c5, type: 3}
     - target: {fileID: 8419396178198313619, guid: 0a0d325ab03511444802a9d94e32207f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9639,13 +9639,13 @@ PrefabInstance:
     - target: {fileID: 701275199242785682, guid: 0a0d325ab03511444802a9d94e32207f,
         type: 3}
       propertyPath: clips.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 701275199242785682, guid: 0a0d325ab03511444802a9d94e32207f,
         type: 3}
       propertyPath: clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 855a603fa0ac8584c8b93b276bbee3dd, type: 3}
+      objectReference: {fileID: 8300000, guid: 7e6ec863107bc4dff9adc6b4a9c9a7e0, type: 3}
     - target: {fileID: 701275199242785682, guid: 0a0d325ab03511444802a9d94e32207f,
         type: 3}
       propertyPath: clips.Array.data[1]
