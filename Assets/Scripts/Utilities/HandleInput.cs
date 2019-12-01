@@ -31,6 +31,8 @@ public class HandleInput : MonoBehaviour
 
     float keyDownTimer;
     protected List<KeyCode> activeInputs = new List<KeyCode>();
+        List<KeyCode> pressedInput;
+        List<KeyCode> releasedInputs;
     bool keyHeldPrevious;
 
     // Check the configuraiton.
@@ -53,7 +55,6 @@ public class HandleInput : MonoBehaviour
                     Debug.Log(code);
                 }
             }
-
         }
 
         holdTimer.value = 0;
@@ -65,8 +66,62 @@ public class HandleInput : MonoBehaviour
         if (holdTimer)
             holdTimer.value = keyDownTimer;
 
+        BuildActiveInputs();
+        BuildReleasedInputs();
+
+        // These are for immediate activation instead of release activation
+        if (!keyHeldPrevious)
+        {
+            if (activeInputs.Count > 0 && activateImmediately)
+            {
+                onKeyPressed.Invoke();
+                keyHeldPrevious = true;
+                holdTimer.value = 0;
+                return;
+            }
+            if (keyDownTimer > shortHoldWait && activateAtShort)
+            {
+                onKeyShortHold.Invoke();
+                keyHeldPrevious = true;
+                holdTimer.value = 0;
+                return;
+            }
+            if (keyDownTimer > longHoldWait && activateAtLong)
+            {
+                onKeyLongHold.Invoke();
+                keyHeldPrevious = true;
+                holdTimer.value = 0;
+                return;
+            }
+        }
+
+        // This condition means all keys were released just now
+        if (releasedInputs.Count == 0 && activeInputs.Count != 0)
+        {
+            if (keyDownTimer > longHoldWait)
+            {
+                onKeyLongHold.Invoke();
+            }
+            else if (keyDownTimer > shortHoldWait && keyDownTimer < longHoldWait)
+            {
+                onKeyShortHold.Invoke();
+            }
+            else if (keyDownTimer > 0 && keyDownTimer < ignorePressAfter)
+            {
+                onKeyPressed.Invoke();
+            }
+
+            keyDownTimer = 0;
+            keyHeldPrevious = false;
+        }
+
+        activeInputs = releasedInputs;
+    }
+
+    void BuildActiveInputs()
+    {
         // Record which inputs are pressed
-        List<KeyCode> pressedInput = new List<KeyCode>();
+        pressedInput = new List<KeyCode>();
 
         if (Input.anyKeyDown || Input.anyKey)
         {
@@ -86,67 +141,21 @@ public class HandleInput : MonoBehaviour
                 keyDownTimer += Time.deltaTime;
             }
         }
+    }
 
+    void BuildReleasedInputs()
+    {
         // Record which held inputs were just released
-        List<KeyCode> releasedInput = new List<KeyCode>();
+        releasedInputs = new List<KeyCode>();
 
         foreach (KeyCode code in activeInputs)
         {
-            releasedInput.Add(code);
+            releasedInputs.Add(code);
 
             if (!pressedInput.Contains(code))
             {
-                releasedInput.Remove(code);
+                releasedInputs.Remove(code);
             }
         }
-
-        // These are for immediate activation instead of release activation
-        if (!keyHeldPrevious)
-        {
-            if (activeInputs.Count > 0 && activateImmediately)
-            {
-                onKeyPressed.Invoke();
-                keyHeldPrevious = true;
-                return;
-            }
-            if (keyDownTimer > shortHoldWait && activateAtShort)
-            {
-                onKeyShortHold.Invoke();
-                keyHeldPrevious = true;
-                return;
-            }
-            if (keyDownTimer > longHoldWait && activateAtLong)
-            {
-                onKeyLongHold.Invoke();
-                keyHeldPrevious = true;
-                return;
-            }
-        }
-        else
-        {
-            return;
-        }
-
-        // This condition means all keys were released just now
-        if (releasedInput.Count == 0 && activeInputs.Count != 0)
-        {
-            if (keyDownTimer > longHoldWait)
-            {
-                onKeyLongHold.Invoke();
-            }
-            else if (keyDownTimer > shortHoldWait && keyDownTimer < longHoldWait)
-            {
-                onKeyShortHold.Invoke();
-            }
-            else if (keyDownTimer > 0 && keyDownTimer < ignorePressAfter)
-            {
-                onKeyPressed.Invoke();
-            }
-
-            keyDownTimer = 0;
-            keyHeldPrevious = false;
-        }
-
-        activeInputs = releasedInput;
     }
 }

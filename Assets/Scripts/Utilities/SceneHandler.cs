@@ -13,10 +13,23 @@ public class SceneHandler : MonoBehaviour
 
     public void LoadASceneAsync()
     {
-        if (thisSceneName != "AlleyScene")
-            SceneManager.UnloadSceneAsync(thisSceneName);
+        if (thisSceneName == "AlleyScene")
+        {
+            SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+            return;
+        }
 
-        SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+        if (thisSceneName != "AlleyScene")
+        {
+            SceneManager.UnloadSceneAsync(thisSceneName);
+            SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync(thisSceneName);
+        }
+
     }
 
     public void QuitGame()
